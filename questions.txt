@@ -2,7 +2,41 @@ Breuzon Camille
 Opsommer Maxime
 
 
-Question 1
-----------
+Q.1)  Ici un certificat serait une répartition possible des objets dans les différents sacs.
+      Implémentation possible : k listes d'objets.
+      Sa taille serait de n.
+      La taille du certificat est bien bornée polynomialement par rapport au nombre d'entrée puisque celles-ce sont égales.
+      Algorithme de vérification :
+
+        Pour chaque liste l {
+          int sum = 0;
+          Pour chaque objet o de l {
+            sum += o.size();
+          }
+          if(sum > c)
+            return false;
+        }
+        return true;
+
+        Cet algorithme est bien polynomiale.
+
+Q.2.1)  Soit l1 la liste d'objets à ranger
+        Soit l2 la liste de sacs
+
+        Pour chaque objet o de l {
+          int numSac = getRandomNumber(Entre 0 et l2.size());
+          l2.get(numSac).add(o);
+        }
+
+        Cette algorithme génère des certificat uniforme.
+
+Q.2.2)  Générer certificat aléatoire;
+        Vérifier le certificat;
+
+Q.3.1)  Avec n fixé, le certificat peut prendre k^n forme.
+
+Q.3.2)  
+
+Q.3.3)  
 
 
