@@ -2,14 +2,19 @@ package main;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
+
+import binpack.PblBinPack;
 
 public class Main {
 	
 	@SuppressWarnings("resource")
 	private static int entrerNombreDeSacs() {
 		try {
-			System.out.print("Nombre de sacs : ");
+			System.out.print("\nNombre de sacs : ");
 			Scanner scan = new Scanner(System.in);
 			int tmp = scan.nextInt();
 			if(tmp < 1) {
@@ -23,37 +28,75 @@ public class Main {
 		}
 	}
 	
-	public static void main(String[] args) {
-		Scanner scan = new Scanner(System.in);
-		File file;
-		//mode
+	@SuppressWarnings("resource")
+	private static String entrerMode() {
+		try {
+			System.out.println("\nVeuillez choisir un mode d'exécution parmis les suivants :");
+			System.out.println("Exhaustif (exh)");
+			System.out.println("Non déterministe (nd)");
+			System.out.println("Vérification (ver)");
+			System.out.print("Mode : ");
+			Scanner scan = new Scanner(System.in);
+			String tmp = scan.next();
+			if(!tmp.equals("-exh") && !tmp.equals("-nd") && !tmp.equals("-ver")) {
+				System.err.println(tmp + " Mode non valide\n");
+				return "";
+			}
+			return tmp;
+		} catch(Exception e) {
+			System.err.println("Mode non valide\n");
+			return "";
+		}
+	}
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		
+		/* Fichier à lire */
+		BufferedReader br = new BufferedReader(new FileReader("DonTPNP/BinPack/exBPeq1"));
+		
+		/* Lecture des données du fichier */
+		int capacite = Integer.parseInt(br.readLine());
+		int nbObjets = Integer.parseInt(br.readLine());
+		int[] poids = new int[nbObjets];
+		for(int i = 0; i < nbObjets; i++)
+			poids[i] = Integer.parseInt(br.readLine());
+		
+		/* Saisie du nombre de sacs */
 		int nbSacs = -1;
 		while(nbSacs == -1)
 			nbSacs = entrerNombreDeSacs();
-		/*BufferedReader donnee  //le fichier qui contient les donnÃ©es du pb
-        = new BufferedReader (new FileReader(args[0]));
-        int cap=Integer.parseInt(donnee.readLine());
-        int nbObjets=Integer.parseInt(donnee.readLine());
-        int poids[]=new int[nbObjets];
-        for (int i=0;i< nbObjets;i++) poids[i]=Integer.parseInt(donnee.readLine());
-        int nbSacs=Integer.parseInt(args[2]);
-        PblBinPack pb=new PblBinPack(nbObjets,poids,nbSacs,cap);
-        if (args[1].equals("-exh")) System.out.println(pb.aUneSolution());
-        else if (args[1].equals("-nd")) System.out.println(pb.aUneSolutionNonDeterministe());
-        else if (args[1].equals("-ver")) {
-            BufferedReader entree = new BufferedReader (new InputStreamReader(System.in));
-            int aff[]=new int[nbObjets];
-            for (int i=0;i < nbObjets; i++) {
-                System.out.print("donnez un no de sac de 1 a "); System.out.println(nbSacs);
-                System.out.print("pour l'objet "); System.out.println(i);
-                aff[i]=Integer.parseInt(entree.readLine());
-                if (aff[i]<0 || aff[i]>=nbSacs) throw new Exception("valeur non autorisee");}
-            Certificat cert =new CertificatBinPack(pb,aff); //constructeur qui affecte aux sacs les valeurs de aff;
-            System.out.println(cert.estCorrect());
-        }
-        else {
-            System.out.println("Usage: java  testBinPack <file>  <mode> <nbsacs>");
-            System.out.println("where modes include: -ver (verif), -nd (non dÃ©terministe), -exh (exhaustif)");}*/
+		
+		/* Choix du mode d'exécution */
+		String mode = "";
+		while(!mode.equals("-exh") && !mode.equals("-nd") && !mode.equals("-ver"))
+			mode = entrerMode();
+		
+		/* Initialisation du BinPack */
+		PblBinPack binPack = new PblBinPack(nbObjets, poids, nbSacs, capacite);
+		
+		boolean res;
+		switch(mode) {
+			case "-exh":
+				res = binPack.aUneSolution();
+				if(res) {
+					System.out.println("Solution trouvée:\n");
+					binPack.getCertificat().affiche();
+				} else
+					System.out.println("Aucune solution trouvée");
+				break;
+			case "-nd":
+				res = binPack.aUneSolutionNonDeterministe();
+				if(res) {
+					System.out.println("Solution non déterministe trouvée:\n");
+					binPack.getCertificat().affiche();
+				} else
+					System.out.println("Le certificat généré n'est pas une solution.");
+				break;
+			default:
+				System.out.println("Vérification pas encore implémentée");
+				break;
+		}
+
 
 	}
 

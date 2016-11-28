@@ -35,8 +35,68 @@ Q.2.2)  GÃ©nÃ©rer certificat alÃ©atoire;
 
 Q.3.1)  Avec n fixÃ©, le certificat peut prendre k^n forme.
 
-Q.3.2)  
+Q.3.2)  Toutes les possibilités de certificat s'obtiendront en "comptant en base k"
 
-Q.3.3)  
+		exemple : (pour n=6 et k=3)
+		
+		On liste de la manière suivante grâce à un tableau d'entier qui indique que l'objet,
+		"indice du tableau" va dans le sac "valeur à cet indice"
+		
+		[0, 0, 2, 1, 0, 1]  --->  Les objets 0, 1 et 4 vont dans le sac 0
+								  Les objets 3 et 5 vont dans le sac 1
+								  L'objet 2 va dans le sac 2
+								  
+		Le certificat suivant serait [0, 0, 2, 1, 0, 2]
+		puis						 [0, 0, 2, 1, 1, 0]
+									 [0, 0, 2, 1, 1, 1]
+									 ..................
+									 ..................
+									 ..................
+		jusqu'à						 [2, 2, 2, 2, 2, 2]
 
+		
 
+Q.3.3)  Pour tester si le problème a une solution, on liste les possiblités comme évoqué à la question précédente,
+		jusqu'à trouver un certificat qui vérifie les conditions, s'il existe. (Chaque poids des sacs doit être
+		inférieur ou égal à sa capacité). Sinon on renvoie Faux.
+		
+		Complexité vérifie si certificatCorrect = N
+		
+		Complexité AUneSolution = Cplx (CertCorrect) * (k^n) = N(K^N)
+		
+		
+Q.5)	Le problème de partition équivaut à un problème de BinPack avec 2 sacs de capacité (somme des xi / 2)
+
+Q.5.2)	Un problème complet est NP-dur, donc NP (NP-dur inclus dans NP)
+		Or, si une propriété np-dur se réduit en une autre propriété, elle est elle aussi np dur
+		De plus, Partition est np-dur et est réduit en BinPack, donc BinPack est np-dur
+		
+Q.5.3)	Oui, car partition est np complete
+		
+Q.6.1)	Partition est un cas particulier de Sum avec C la moitié de la somme des xi.
+
+Q.7)	Soit la liste d'entiers x = {3,2,5,4,2,8} et la capaicté c = 7
+		On a : somme des xi = 24
+		
+		On veut réduire le problème Sum en problème Partition (donc avec 2 sacs), l'objectif étant qu'au moins un des 2 sacs contient exactement C.
+		Or, si l'on veut résoudre le problème en tant que "Partition" (2 parts égales) il faut modifier les paramètres X et/ou C, car on
+		a actuellement (somme xi)/2 = 12 pour une capacité de 7
+		Il faudrait ajouter une valeur à C pour rendre le problème résolvable, on aurait alors :
+		
+		soit Y la valeur que l'on veut insérer
+		
+		C + Y = (somme xi) - C 			((somme xi) - C   car l'obectif étant que C est la moitié de (somme xi)
+		donc
+		Y = (somme xi) - 2C
+		
+		Dans notre cas, on a :
+		
+		7 + Y = 24 - 7
+		Y = 24 - 7 - 7
+		Y = 10
+		
+		Cette équation est résolvable si et seulement s'il existe une solution au problème de Partition.
+		
+Q.8)	On réduit Sum en Partition, puis en BinPack.
+
+Q.9)
