@@ -1,5 +1,6 @@
 package sum;
 
+import binpack.PblBinPack;
 import partition.PblPartition;
 
 public class PblSum {
@@ -26,15 +27,21 @@ public class PblSum {
 		return this.entierCible;
 	}
 	
-	public PblPartition toPartition() {
+	public PblPartition toPblPartition() {
 		int somme = 0;
 		int[] tab = new int[this.nbEntiers +1];
 		System.arraycopy(this.entiers, 0, tab, 0, this.nbEntiers);
 		for(int i = 0; i < nbEntiers; i++) {
 			somme += this.entiers[i];
 		}
-		tab[this.nbEntiers] = somme;
-		return new PblPartition(this.nbEntiers, tab);
+		tab[this.nbEntiers] = (2 * this.entierCible) - somme;
+		return new PblPartition(this.nbEntiers + 1, tab);
+	}
+	
+	public PblBinPack toPblBinPack() {
+		PblBinPack binPack = this.toPblPartition().toPblBinPack();
+		binPack.getObjets().remove(binPack.getObjets().size() - 1);
+		return binPack;
 	}
 
 }

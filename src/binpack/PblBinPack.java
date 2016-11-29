@@ -5,6 +5,7 @@ import java.util.List;
 
 import structure.Certificat;
 import structure.PblDec;
+import sum.CertificatSum;
 
 public class PblBinPack implements PblDec {
 	
@@ -33,14 +34,19 @@ public class PblBinPack implements PblDec {
 		return this.certificat;
 	}
 	
+	public void setCertificatSum() {
+		this.certificat = new CertificatSum(this);
+	}
+	
 	public void viderSacs() {
 		for(Sac sac : sacs)
 			sac.vider();
 	}
 	
 	@Override
-	public boolean aUneSolution() {	
-		this.certificat = new CertificatBinPack(this);
+	public boolean aUneSolution() {
+		if(this.certificat == null)
+			this.certificat = new CertificatBinPack(this);
 		
 		while(!this.certificat.estDernier()) {
 			if(this.certificat.estCorrect())

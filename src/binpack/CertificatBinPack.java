@@ -45,7 +45,7 @@ public class CertificatBinPack implements Certificat {
 	}
 	
 	public void viderSacs() {
-		binPack.viderSacs();
+		this.binPack.viderSacs();
 	}
 
 	public boolean estCorrect() {
@@ -60,7 +60,7 @@ public class CertificatBinPack implements Certificat {
 
 	public void suivant() {
 		int limit = this.nbSacs - 1;
-		for(int i = disposition.length - 1; i > 0; i--) {
+		for(int i = disposition.length - 1; i >= 0; i--) {
 			if(disposition[i] == limit)
 				disposition[i] = 0;
 			else {
@@ -74,7 +74,7 @@ public class CertificatBinPack implements Certificat {
 		int tmp = this.nbSacs - 1;
 		int length = this.disposition.length;
 		for(int i = 0; i < length; i++) {
-			 if(this.disposition[i] != tmp)
+			if(this.disposition[i] != tmp)
 				 return false;
 		}
 		return true;

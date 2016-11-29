@@ -75,25 +75,24 @@ Q.5.3)	Oui, car partition est np complete
 		
 Q.6.1)	Partition est un cas particulier de Sum avec C la moitié de la somme des xi.
 
-Q.7)	Soit la liste d'entiers x = {3,2,5,4,2,8} et la capaicté c = 7
-		On a : somme des xi = 24
+Q.7)	Soit la liste d'entiers x = {12, 12, 8, 4, 6, 10, 4} et la capacité c = 26
+
+		On a : somme des xi = 56
 		
 		On veut réduire le problème Sum en problème Partition (donc avec 2 sacs), l'objectif étant qu'au moins un des 2 sacs contient exactement C.
-		Or, si l'on veut résoudre le problème en tant que "Partition" (2 parts égales) il faut modifier les paramètres X et/ou C, car on
-		a actuellement (somme xi)/2 = 12 pour une capacité de 7
-		Il faudrait ajouter une valeur à C pour rendre le problème résolvable, on aurait alors :
+		Or, si l'on veut résoudre le problème en tant que "Partition" (2 parts égales) il faut rajouter un entier "temporaire" à X, de manière à
+		ce que la moitié de la somme des xi (avec le nouveau X) vale l'entier cible.
+		(somme des xi) / 2 = 28  et  C = 26
+		Pour obtenir 26, il faut que la somme des xi vale le double de C, soit 52.
+		Si l'on insère -4 à la liste, on obtient bien un C égal à 26.
 		
+		De manière générale, on a :
 		soit Y la valeur que l'on veut insérer
 		
-		C + Y = (somme xi) - C 			((somme xi) - C   car l'obectif étant que C est la moitié de (somme xi)
-		donc
-		Y = (somme xi) - 2C
+		((somme xi) + Y) / 2 = C
+		(somme xi) + Y = 2C
+		Y = 2C - (somme xi)
 		
-		Dans notre cas, on a :
-		
-		7 + Y = 24 - 7
-		Y = 24 - 7 - 7
-		Y = 10
 		
 		Cette équation est résolvable si et seulement s'il existe une solution au problème de Partition.
 		
